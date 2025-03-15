@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-
+  --font-family: var(--font-open-sans);
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -209,11 +209,16 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@layer base {
+body {
+  font-family: var(--font-family), sans-serif !important;
+}
+
+/* @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-family), sans-serif !important;
   }
-}
+} */

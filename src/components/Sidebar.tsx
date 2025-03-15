@@ -11,7 +11,13 @@ const navItems = [
   { name: "Users", href: "/users", icon: <Users size={20} /> },
 ];
 
-export default function Sidebar({ isOpen, closeSidebar }: { isOpen: boolean; closeSidebar: () => void }) {
+export default function Sidebar({
+  isOpen,
+  closeSidebar,
+}: {
+  isOpen: boolean;
+  closeSidebar: () => void;
+}) {
   const pathname = usePathname();
 
   return (
@@ -32,7 +38,7 @@ export default function Sidebar({ isOpen, closeSidebar }: { isOpen: boolean; clo
         )}
       >
         <h2 className="text-xl font-bold mb-5">Admin Dashboard</h2>
-        <nav>
+        <div className="flex flex-col gap-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -47,7 +53,7 @@ export default function Sidebar({ isOpen, closeSidebar }: { isOpen: boolean; clo
               {item.name}
             </Link>
           ))}
-        </nav>
+        </div>
       </aside>
     </>
   );

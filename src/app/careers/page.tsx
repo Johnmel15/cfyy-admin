@@ -1,24 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
-import api from "@/lib/api";
+import ProtectedRoute from "@/components/ProtectedRoutes";
+import { useState } from "react";
 
 export default function CareersPage() {
   const [careers, setCareers] = useState([]);
 
-  useEffect(() => {
-    api.get("/careers").then((response) => {
-      setCareers(response.data);
-    });
-  }, []);
-
   return (
+    <ProtectedRoute>
       <div className="p-6">
         <h1 className="text-2xl font-semibold mb-4">Careers</h1>
         <ul>
           {careers.map((career: any) => (
-            <li key={career.id} className="border-b p-2">{career.title}</li>
+            <li key={career.id} className="border-b p-2">
+              {career.title}
+            </li>
           ))}
         </ul>
       </div>
+    </ProtectedRoute>
   );
 }

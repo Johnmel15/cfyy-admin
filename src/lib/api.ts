@@ -1,10 +1,27 @@
-import axios from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const api = (token = ""): AxiosInstance => {
+  const apiConfig = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+
+  apiConfig.interceptors.response.use(
+    (response: AxiosResponse) => response,
+    (error) => {
+      console.error(
+        "API Error:",
+        error.response?.data?.message || error.message
+      );
+      return Promise.reject(error);
+    }
+  );
+
+  return apiConfig; // ✅ Return the Axios instance directly
+};
 
 export default api;
