@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, LogOut, Loader } from "lucide-react";
+import { Menu, LogOut, Loader, BadgeCheck } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -29,41 +29,59 @@ export default function Header({
   };
 
   return (
-    <header className="bg-white shadow-md p-4 flex items-center justify-between">
+    <header className="bg-white shadow-md p-4 flex items-center justify-between lg:justify-end">
       {/* Sidebar Toggle Button */}
       <button onClick={toggleSidebar} className="lg:hidden text-gray-700">
         <Menu size={24} />
       </button>
 
-      <h1 className="text-lg font-semibold">Dashboard</h1>
-
       {/* User Avatar Dropdown */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button disabled={loading}>
-            <Avatar>
-              <AvatarImage
-                src={session?.user?.image || "/avatar.png"}
-                alt="User Avatar"
-              />
+            <Avatar className="cursor-pointer">
+              <AvatarImage src="/avatar/male.png" alt="User Avatar" />
               <AvatarFallback>
                 {session?.user?.name?.charAt(0) || "U"}
               </AvatarFallback>
             </Avatar>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48">
-          <div className="px-3 py-2 text-sm text-gray-700">
-            {session?.user?.name || "User"}
+        <DropdownMenuContent align="end" className="w-48 border-gray-200">
+          <div className="flex items-center gap-2 px-2 py-2 text-sm text-gray-700">
+            <Avatar>
+              <AvatarImage src="/avatar/male.png" alt="User Avatar" />
+              <AvatarFallback>
+                {session?.user?.name?.charAt(0) || "U"}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="font-[700] text-[13.3px]">
+                {session?.user?.name || "User"}
+              </p>
+              <p className="text-[12px] text-gray-500">sample@gmail.com</p>
+            </div>
           </div>
+          <hr className="border-gray-200 pb-1" />
           <DropdownMenuItem
-            className="cursor-pointer text-red-500 flex items-center"
+            className="cursor-pointer text-[13.3px] px-4 flex items-center"
             onClick={handleLogout}
           >
             {loading ? (
               <Loader className="animate-spin mr-2" size={16} />
             ) : (
-              <LogOut size={16} className="mr-2" />
+              <BadgeCheck size={16} className="text-black" />
+            )}
+            Account
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer text-[13.3px] px-4 flex items-center"
+            onClick={handleLogout}
+          >
+            {loading ? (
+              <Loader className="animate-spin mr-2" size={16} />
+            ) : (
+              <LogOut size={16} className="text-black" />
             )}
             Logout
           </DropdownMenuItem>

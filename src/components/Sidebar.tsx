@@ -6,9 +6,9 @@ import { Calendar, Briefcase, Users } from "lucide-react";
 import clsx from "clsx";
 
 const navItems = [
-  { name: "Appointments", href: "/appointments", icon: <Calendar size={20} /> },
-  { name: "Careers", href: "/careers", icon: <Briefcase size={20} /> },
-  { name: "Users", href: "/users", icon: <Users size={20} /> },
+  { name: "Appointments", href: "/appointments", icon: <Calendar size={18} /> },
+  { name: "Careers", href: "/careers", icon: <Briefcase size={18} /> },
+  { name: "Users", href: "/users", icon: <Users size={18} /> },
 ];
 
 export default function Sidebar({
@@ -37,7 +37,7 @@ export default function Sidebar({
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <h2 className="text-xl font-bold mb-5">Admin Dashboard</h2>
+        <h2 className="text-md font-bold mb-5">Admin Dashboard</h2>
         <div className="flex flex-col gap-1">
           {navItems.map((item) => (
             <Link
@@ -45,7 +45,7 @@ export default function Sidebar({
               href={item.href}
               onClick={closeSidebar} // Close sidebar on link click
               className={clsx(
-                "flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition",
+                "flex text-[13.3px] items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition",
                 pathname === item.href ? "bg-gray-700" : ""
               )}
             >
