@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
 import ClientLayout from "@/components/ClientLayout";
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -22,8 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <html lang="en" className={openSans.variable}>
-        <body>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} violet antialiased`}
+        >
           <ClientLayout>{children}</ClientLayout>
         </body>
       </html>

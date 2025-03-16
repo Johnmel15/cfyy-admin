@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,12 +6,12 @@ import * as yup from "yup";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
-// Define validation schema
 const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
@@ -27,10 +26,14 @@ type LoginFormValues = {
   password: string;
 };
 
-export default function LoginForm() {
+const LoginForm = ({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"form">) => {
   const router = useRouter();
   const { status } = useSession(); // Get authentication status
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const {
     register,
@@ -73,42 +76,76 @@ export default function LoginForm() {
   };
 
   return (
-    <Card className="max-w-md mx-auto mt-10 p-6 shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-xl font-semibold text-center">
-          Login
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <Input placeholder="Email" {...register("email")} />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
-            )}
-          </div>
-          <div>
-            <Input
-              type="password"
-              placeholder="Password"
-              {...register("password")}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
-            )}
-          </div>
-          {errorMessage && (
-            <p className="text-red-500 text-sm">{errorMessage}</p>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={cn("flex flex-col gap-6", className)}
+      {...props}
+    >
+      <div className="flex flex-col items-center gap-2 text-center">
+        <h1 className="text-2xl font-bold">Login to your account</h1>
+        <p className="text-balance text-sm text-muted-foreground">
+          Enter your email below to login to your account
+        </p>
+      </div>
+      <div className="grid gap-6">
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
-          <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? (
-              <Loader className="animate-spin mr-2" size={16} />
-            ) : (
-              "Login"
-            )}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+        <div className="grid gap-2">
+          <div className="flex items-center">
+            <Label htmlFor="password">Password</Label>
+            <a
+              href="#"
+              className="ml-auto text-sm underline-offset-4 hover:underline"
+            >
+              Forgot your password?
+            </a>
+          </div>
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
+              className="pr-10" // Ensure space for the button
+            />
+            <Button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 hover:bg-transparent cursor-pointer"
+              variant="ghost"
+              size="icon"
+            >
+              {showPassword ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </Button>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
+        </div>
+        {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <Loader className="animate-spin mr-2" size={16} />
+          ) : (
+            "Login"
+          )}
+        </Button>
+      </div>
+    </form>
   );
-}
+};
+
+export default LoginForm;

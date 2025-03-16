@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Calendar, Briefcase, Users } from "lucide-react";
+import { Calendar, Briefcase, Users, Settings } from "lucide-react";
 import clsx from "clsx";
 
 const navItems = [
   { name: "Appointments", href: "/appointments", icon: <Calendar size={18} /> },
   { name: "Careers", href: "/careers", icon: <Briefcase size={18} /> },
   { name: "Users", href: "/users", icon: <Users size={18} /> },
+  { name: "Settings", href: "/settings", icon: <Settings size={18} /> },
 ];
 
 export default function Sidebar({
@@ -33,11 +34,11 @@ export default function Sidebar({
       {/* Sidebar */}
       <aside
         className={clsx(
-          "bg-gray-900 text-white w-64 p-5 fixed inset-y-0 left-0 transform transition-transform lg:relative lg:translate-x-0 z-50",
+          "text-black w-64 border-r shadow-md p-5 fixed inset-y-0 left-0 transform transition-transform lg:relative lg:translate-x-0 z-50",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <h2 className="text-md font-bold mb-5">Admin Dashboard</h2>
+        <h2 className="text-md font-bold pl-3 mb-5">Admin Dashboard</h2>
         <div className="flex flex-col gap-1">
           {navItems.map((item) => (
             <Link
@@ -45,8 +46,8 @@ export default function Sidebar({
               href={item.href}
               onClick={closeSidebar} // Close sidebar on link click
               className={clsx(
-                "flex text-[13.3px] items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition",
-                pathname === item.href ? "bg-gray-700" : ""
+                "flex text-[13.3px] font-medium items-center gap-3 px-3 py-2 rounded-md hover:bg-primary hover:text-white transition",
+                pathname === item.href ? "bg-primary text-white" : ""
               )}
             >
               {item.icon}

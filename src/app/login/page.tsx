@@ -1,10 +1,10 @@
 "use client";
-import { LoginForm } from "@/modules/Login";
+import { LoginContainer } from "@/modules/Login";
 
 export default function LoginPage() {
   return (
     <div>
-      <LoginForm />
+      <LoginContainer />
     </div>
   );
 }

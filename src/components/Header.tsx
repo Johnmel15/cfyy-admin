@@ -39,7 +39,7 @@ export default function Header({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button disabled={loading}>
-            <Avatar className="cursor-pointer">
+            <Avatar className="cursor-pointer border-2 border-primary">
               <AvatarImage src="/avatar/male.png" alt="User Avatar" />
               <AvatarFallback>
                 {session?.user?.name?.charAt(0) || "U"}
@@ -49,7 +49,7 @@ export default function Header({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48 border-gray-200">
           <div className="flex items-center gap-2 px-2 py-2 text-sm text-gray-700">
-            <Avatar>
+            <Avatar className="border-2 border-primary">
               <AvatarImage src="/avatar/male.png" alt="User Avatar" />
               <AvatarFallback>
                 {session?.user?.name?.charAt(0) || "U"}
@@ -64,24 +64,23 @@ export default function Header({
           </div>
           <hr className="border-gray-200 pb-1" />
           <DropdownMenuItem
-            className="cursor-pointer text-[13.3px] px-4 flex items-center"
-            onClick={handleLogout}
+            className="group cursor-pointer text-[13.3px] px-4 flex items-center hover:bg-primary"
+            // onClick={handleLogout}
           >
-            {loading ? (
-              <Loader className="animate-spin mr-2" size={16} />
-            ) : (
-              <BadgeCheck size={16} className="text-black" />
-            )}
+            <BadgeCheck
+              size={16}
+              className="text-black group-hover:text-white"
+            />
             Account
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="cursor-pointer text-[13.3px] px-4 flex items-center"
+            className="group cursor-pointer text-[13.3px] px-4 flex items-center"
             onClick={handleLogout}
           >
             {loading ? (
               <Loader className="animate-spin mr-2" size={16} />
             ) : (
-              <LogOut size={16} className="text-black" />
+              <LogOut size={16} className="text-black group-hover:text-white" />
             )}
             Logout
           </DropdownMenuItem>

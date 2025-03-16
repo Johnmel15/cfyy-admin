@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-family: var(--font-open-sans);
+
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -69,6 +69,9 @@
   --sidebar-border: oklch(0.922 0 0);
 
   --sidebar-ring: oklch(0.708 0 0);
+
+  --font-geist-sans: var(--geist-sans);
+  --font-geist-mono: var(--geist-mono);
 }
 
 .dark {
@@ -134,6 +137,21 @@
   --sidebar-border: oklch(1 0 0 / 10%);
 
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Violet Theme */
+.violet {
+  --primary: oklch(0.54 0.25 292.96); /* Bright Violet */
+  --primary-foreground: oklch(1 0 0);
+
+  --accent: oklch(0.65 0.2 300);
+  --accent-foreground: oklch(1 0 0);
+
+  --ring: oklch(0.65 0.2 300);
+}
+
+body {
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
 @theme inline {
@@ -209,16 +227,11 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-body {
-  font-family: var(--font-family), sans-serif !important;
-}
-
-/* @layer base {
+@layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-family), sans-serif !important;
+    @apply bg-background text-foreground font-sans;
   }
-} */
+}
