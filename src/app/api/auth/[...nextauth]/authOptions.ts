@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
           );
 
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/auth/login`,
+            `${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/login`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

@@ -3,6 +3,7 @@ import { ActionDropdown } from "@/components/Datatable/components";
 import { ColumnDef } from "@tanstack/react-table";
 import { Archive, Eye, Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import Modal from "./Modal";
 
 type User = {
   id: string;
@@ -10,11 +11,12 @@ type User = {
   email: string;
   phone: string;
   message: React.ReactNode;
-  actions: any;
+  actions: { label: string; onClick: () => void; icon?: React.ReactNode }[];
 };
 
 const Container = () => {
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const columns: ColumnDef<User>[] = [
     { accessorKey: "id", header: "ID" },
@@ -69,7 +71,7 @@ const Container = () => {
         {
           label: "View",
           icon: <Eye size="16" />,
-          onClick: () => alert("View User One"),
+          onClick: () => setIsOpen(true),
         },
         {
           label: "Delete",
@@ -139,6 +141,7 @@ const Container = () => {
     <div className="p-2">
       <h1 className="text-xl font-medium mb-4">Appointments</h1>
       <DataTable columns={columns} data={data} />
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}/>
     </div>
   );
 };

@@ -34,7 +34,7 @@ export default function Sidebar({
       {/* Sidebar */}
       <aside
         className={clsx(
-          "text-black w-64 border-r shadow-md p-5 fixed inset-y-0 left-0 transform transition-transform lg:relative lg:translate-x-0 z-50",
+          "bg-white text-black w-64 border-r shadow-md p-5 fixed inset-y-0 left-0 transform transition-transform lg:relative lg:translate-x-0 z-50",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
