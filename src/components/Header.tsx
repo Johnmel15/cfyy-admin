@@ -48,10 +48,7 @@ export default function Header({
             </Avatar>
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          className="w-48 border-gray-200 w-auto"
-        >
+        <DropdownMenuContent align="end" className="border-gray-200 w-auto">
           <div className="flex items-center gap-2 px-2 py-2 text-sm text-gray-700">
             <Avatar className="border-2 border-primary w-[60px] h-[60px]">
               <AvatarImage src="/avatar/male.png" alt="User Avatar" />
@@ -70,7 +67,7 @@ export default function Header({
                 variant="outline"
                 className="text-[10px] bg-primary text-white font-[600]"
               >
-                {session?.user?.roles[0]?.role?.toUpperCase()}
+                {session?.user?.roles?.[0]?.role?.toUpperCase()}
               </Badge>
             </div>
           </div>
