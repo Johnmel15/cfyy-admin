@@ -4,7 +4,7 @@ import { AppointmentContainer } from "@/modules/Appointment";
 
 export default function AppointmentsPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requiredPermission="appointments:view">
       <AppointmentContainer />
     </ProtectedRoute>
   );

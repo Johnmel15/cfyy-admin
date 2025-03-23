@@ -4,7 +4,7 @@ import { UsersContainer } from "@/modules/Users";
 
 export default function UsersPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requiredPermission="users:view">
       <UsersContainer />
     </ProtectedRoute>
   );

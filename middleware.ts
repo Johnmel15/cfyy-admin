@@ -3,18 +3,19 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
-  const token = await getToken({ req });
-  const { pathname } = req.nextUrl;
+  console.log("✅ Middleware is running for:", req.nextUrl.pathname);
 
-  // Allow requests if it's a public path or the user has a valid token
-  if (pathname === "/login" || token) {
+  const token = await getToken({ req });
+  console.log("🔹 Token received:", token);
+
+  if (req.nextUrl.pathname === "/login" || token) {
     return NextResponse.next();
   }
 
-  // Redirect unauthenticated users to the login page
+  console.log("🚫 Redirecting to login...");
   return NextResponse.redirect(new URL("/login", req.url));
 }
 
 export const config = {
-  matcher: ["/appointments/:path*", "/careers/:path*", "/users/:path*"],
+  matcher: ["/settings", "/appointments", "/careers", "/users"],
 };

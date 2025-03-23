@@ -4,7 +4,7 @@ import { CareerContainer } from "@/modules/Career";
 
 export default function CareersPage() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requiredPermission="careers:view">
       <CareerContainer />
     </ProtectedRoute>
   );

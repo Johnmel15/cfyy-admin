@@ -53,6 +53,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             token: response.token, // Token is outside user object
+            roles: response.roles, // Include roles & permissions
           } as User;
         } catch (error) {
           console.error("Authorization error:", error);
@@ -71,6 +72,7 @@ export const authOptions: NextAuthOptions = {
         token.name = user.name;
         token.email = user.email;
         token.accessToken = user.token;
+        token.roles = user.roles; // Save roles & permissions
       }
       return token;
     },
@@ -80,6 +82,7 @@ export const authOptions: NextAuthOptions = {
         name: token.name as string,
         email: token.email as string,
         token: token.accessToken as string,
+        roles: token.roles as any, // Store roles & permissions
       };
       return session;
     },

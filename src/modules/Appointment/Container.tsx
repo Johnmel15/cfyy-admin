@@ -4,6 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Archive, Eye, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import Modal from "./Modal";
+import { useSession } from "next-auth/react";
+import { getUserPermissions } from "@/app/utils/helpers";
 
 type User = {
   id: string;
@@ -14,7 +16,14 @@ type User = {
   actions: { label: string; onClick: () => void; icon?: React.ReactNode }[];
 };
 
+const hasPermission = (permissions: string[], action: string) => {
+  return permissions.includes(action);
+};
+
 const Container = () => {
+  const { data: session } = useSession();
+  const userRoles = session?.user?.roles || []; // Get user roles
+  const userPermissions = getUserPermissions(userRoles); // Extract permissions
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -68,22 +77,22 @@ const Container = () => {
       message:
         "Lorem ipsum odor amet, consectetuer adipiscing elit. Egestas vulputate feugiat tempus fermentum ac ultricies. Diam nam in sapien fringilla, aenean nibh tristique laoreet. Ridiculus pulvinar vestibulum felis praesent fames. Imperdiet morbi velit purus taciti dapibus. Platea convallis elit mollis integer torquent class quam quisque. Nostra vehicula iaculis conubia risus suspendisse magnis bibendum. Gravida orci torquent laoreet per aenean nunc cras, diam erat. Odio hac lacinia erat tempor taciti nibh; vivamus netus euismod. Eros leo tellus torquent; torquent libero adipiscing ridiculus varius feugiat.",
       actions: [
-        {
+        hasPermission(userPermissions, "appointments:view") && {
           label: "View",
           icon: <Eye size="16" />,
           onClick: () => setIsOpen(true),
         },
-        {
+        hasPermission(userPermissions, "appointments:delete") && {
           label: "Delete",
           icon: <Trash2 size="16" />,
           onClick: () => alert("Delete User One"),
         },
-        {
-          label: "Archived",
+        hasPermission(userPermissions, "appointments:confirm") && {
+          label: "Confirm",
           icon: <Archive size="16" />,
-          onClick: () => alert("Archive User One"),
+          onClick: () => alert("Confirm Appointment"),
         },
-      ],
+      ].filter(Boolean) as User["actions"], // Filter out undefined actions
     },
     {
       id: "2",
@@ -93,22 +102,22 @@ const Container = () => {
       message:
         "Lorem ipsum odor amet, consectetuer adipiscing elit. Egestas vulputate feugiat tempus fermentum ac ultricies. Diam nam in sapien fringilla, aenean nibh tristique laoreet. Ridiculus pulvinar vestibulum felis praesent fames. Imperdiet morbi velit purus taciti dapibus. Platea convallis elit mollis integer torquent class quam quisque. Nostra vehicula iaculis conubia risus suspendisse magnis bibendum. Gravida orci torquent laoreet per aenean nunc cras, diam erat. Odio hac lacinia erat tempor taciti nibh; vivamus netus euismod. Eros leo tellus torquent; torquent libero adipiscing ridiculus varius feugiat.",
       actions: [
-        {
+        hasPermission(userPermissions, "appointments:view") && {
           label: "View",
           icon: <Eye size="16" />,
-          onClick: () => alert("View User One"),
+          onClick: () => setIsOpen(true),
         },
-        {
+        hasPermission(userPermissions, "appointments:delete") && {
           label: "Delete",
           icon: <Trash2 size="16" />,
           onClick: () => alert("Delete User One"),
         },
-        {
-          label: "Archived",
+        hasPermission(userPermissions, "appointments:confirm") && {
+          label: "Confirm",
           icon: <Archive size="16" />,
-          onClick: () => alert("Archive User One"),
+          onClick: () => alert("Confirm Appointment"),
         },
-      ],
+      ].filter(Boolean) as User["actions"], // Filter out undefined actions
     },
     {
       id: "3",
@@ -118,22 +127,22 @@ const Container = () => {
       message:
         "Lorem ipsum odor amet, consectetuer adipiscing elit. Egestas vulputate feugiat tempus fermentum ac ultricies. Diam nam in sapien fringilla, aenean nibh tristique laoreet. Ridiculus pulvinar vestibulum felis praesent fames. Imperdiet morbi velit purus taciti dapibus. Platea convallis elit mollis integer torquent class quam quisque. Nostra vehicula iaculis conubia risus suspendisse magnis bibendum. Gravida orci torquent laoreet per aenean nunc cras, diam erat. Odio hac lacinia erat tempor taciti nibh; vivamus netus euismod. Eros leo tellus torquent; torquent libero adipiscing ridiculus varius feugiat.",
       actions: [
-        {
+        hasPermission(userPermissions, "appointments:view") && {
           label: "View",
           icon: <Eye size="16" />,
-          onClick: () => alert("View User One"),
+          onClick: () => setIsOpen(true),
         },
-        {
+        hasPermission(userPermissions, "appointments:delete") && {
           label: "Delete",
           icon: <Trash2 size="16" />,
           onClick: () => alert("Delete User One"),
         },
-        {
-          label: "Archived",
+        hasPermission(userPermissions, "appointments:confirm") && {
+          label: "Confirm",
           icon: <Archive size="16" />,
-          onClick: () => alert("Archive User One"),
+          onClick: () => alert("Confirm Appointment"),
         },
-      ],
+      ].filter(Boolean) as User["actions"], // Filter out undefined actions
     },
   ];
 
@@ -141,7 +150,7 @@ const Container = () => {
     <div className="p-2">
       <h1 className="text-xl font-medium mb-4">Appointments</h1>
       <DataTable columns={columns} data={data} />
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen}/>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

@@ -1,24 +1,44 @@
 "use client";
+
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
-interface ProtectedRouteProps {
+interface ProtectedPageProps {
   children: ReactNode;
+  requiredPermission: string;
 }
 
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+export default function ProtectedPage({
+  children,
+  requiredPermission,
+}: ProtectedPageProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
+    if (status === "loading") return; // Wait until session is fetched
 
-  if (status === "loading") {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    if (status === "unauthenticated") {
+      router.replace("/login"); // Redirect if not logged in
+    } else if (
+      session?.user?.roles?.some((role: any) =>
+        role.permissions.includes(requiredPermission)
+      )
+    ) {
+      setAuthorized(true); // Allow access
+    } else {
+      router.replace("/403"); // Redirect to Forbidden page
+    }
+  }, [status, session, router, requiredPermission]);
+
+  if (status === "loading" || !authorized) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="text-gray-600">Loading...</span>
+      </div>
+    );
   }
 
   return <>{children}</>;

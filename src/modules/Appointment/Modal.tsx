@@ -30,7 +30,9 @@ const Modal: FC<ModalProps> = (props) => {
           <div className="flex flex-col gap-2">
             <div className="flex gap-2 justify-between mb-2">
               <div className="flex gap-2">
-                <div className="bg-gray-100 rounded-full p-4 h-fit">UO</div>
+                <div className="bg-gray-100 rounded-full p-4 border-2 border-primary h-fit">
+                  UO
+                </div>
                 <div>
                   <p className="font-bold">User One</p>
                   <p className="text-sm font-medium text-gray-500">

@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    middlewarePrefetch: "strict", // Ensure middleware runs correctly
+  },
 };
 
 export default nextConfig;
